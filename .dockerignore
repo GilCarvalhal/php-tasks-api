@@ -1,0 +1,26 @@
+# Segredos e config local
+.env
+.env.*
+!/.env.example
+
+# Repositório e IDE
+.git
+.gitignore
+.vscode/
+.idea/
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Dependências (caso usar futuramente)
+vendor/
+node_modules/
+composer.lock
+
+# Logs / caches
+storage/
+*.log
+
+# Volumes do Docker
+docker/mysql-data/

@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api_php_app
+    ports:
+      - "8080:80"       # http://localhost:8080
+    volumes:
+      - ./:/var/www/html        # monta o código
+    env_file:
+      - .env        # injeta APP_ENV, DB_* no container do PHP
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.4
+    container_name: api_php_db
+    env_file:
+      - .env        # injeta MYSQL_* para inicializar o MySQL
+    ports:
+      - "3307:3306"       # host:container
+    volumes:
+      - ./docker/mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s

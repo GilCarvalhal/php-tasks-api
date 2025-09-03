@@ -1,0 +1,22 @@
+# Env (não comitar segredos)
+.env
+.env.*
+!.env.example
+
+# Volumes/Dados do Docker
+docker/mysql-data/
+
+# Logs / temporários
+storage/
+*.log
+
+# IDE/SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Dependências (caso usar futuramente)
+vendor/
+composer.lock
+node_modules/
