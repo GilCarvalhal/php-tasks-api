@@ -6,6 +6,9 @@ use App\Support\Router;
 use App\Support\Response;
 use App\Support\Request;
 
+use App\Repository\MysqlTaskRepository;
+use App\Controller\TaskController;
+
 require_once __DIR__ . '/../bootstrap.php';
 
 /** CORS */
@@ -40,5 +43,17 @@ $router->get('/health', function (Request $r)
 
     Response::json(['status' => 'ok']);
 });
+
+$repo = new MysqlTaskRepository(Database::pdo());
+$tasks = new TaskController($repo);
+
+$router->get   ('/tasks',       [$tasks, 'index']);
+$router->get   ('/tasks/{id}',  [$tasks, 'show']);
+$router->post  ('/tasks',       [$tasks, 'store']);
+$router->put   ('/tasks/{id}',  [$tasks, 'update']);
+$router->delete('/tasks/{id}',  [$tasks, 'destroy']);
+
+$router->options('/tasks',      fn() => Response::noContent());
+$router->options('/tasks/{id}', fn() => Response::noContent());
 
 $router->dispatch(Request::fromGlobals());

@@ -1,7 +1,7 @@
 FROM php:8.3-apache
 
 # PDO MySQL + URL rewriting
-RUN docker-php-ext-install pdo pdo_mysql \
+RUN docker-php-ext-install pdo pdo_mysql mbstring \
     && a2enmod rewrite \
     && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
